@@ -28,6 +28,13 @@ class Auction(db.Document):
 
     bidder = mg.StringField(max_length=50)  # 获拍者账号
 
+    meta = {
+        'indexes': [
+            'productName',
+            'endTime',
+        ]
+    }
+
     @classmethod
     def upsert(cls, data):
         return cls.objects(
@@ -44,3 +51,13 @@ class Auction(db.Document):
             set__bidder=data.get('bidder'),
             upsert=True
         )
+
+    def to_dict(self):
+        return {
+            'auction_id': self.auction_id,
+            'productName': self.productName,
+            'quality': self.quality,
+            'endTime': self.endTime,
+            'status': self.status,
+            'currentPrice': self.currentPrice,
+        }
