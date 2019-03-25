@@ -1,9 +1,12 @@
 """拍卖品model"""
 from enum import Enum
 
-from . import db
 import mongoengine as mg
 
+from . import db
+
+
+# pylint: disable=E1101
 
 class Status(Enum):
     notStart = 1

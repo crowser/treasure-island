@@ -1,5 +1,6 @@
 """视图初始化"""
 from flask import Blueprint
+
 from .urls import paths
 from app.utils.api import batch_register_api
 

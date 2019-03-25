@@ -1,5 +1,5 @@
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.1.0
+  rev: HEAD
   hooks:
     - id: flake8
       args:
@@ -7,17 +7,19 @@
     - id: check-docstring-first
     - id: debug-statements
 - repo: https://github.com/pre-commit/mirrors-autopep8
-  rev: v1.4.3
+  rev: HEAD
   hooks:
     - id: autopep8
 - repo: https://github.com/asottile/reorder_python_imports
-  rev: v1.3.5
+  rev: HEAD
   hooks:
     - id: reorder-python-imports
       language_version: python3
-- repo: https://github.com/pre-commit/mirrors-pylint
-  rev: v2.2.2
+- repo: local
   hooks:
     - id: pylint
-      args:
-        - --rcfile=./.pylintrc
+      name: pylint
+      entry: pylint
+      language: system
+      files: \.py$
+      args: [--rcfile=.pylintrc, --load-plugins=pylint_flask]

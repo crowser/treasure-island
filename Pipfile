@@ -10,12 +10,15 @@ tox = "*"
 tox-pipenv = "*"
 pytest = "*"
 pytest-cov = "*"
+pylint = "*"
+pylint-flask = "*"
 
 [packages]
-Flask = "*"
+flask = "*"
 flask-mongoengine = "*"
 requests = "*"
-celery = {extras = ["redis"],version = "*"}
+celery = "*"
+redis = "*"
 
 [requires]
 python_version = "3.6"

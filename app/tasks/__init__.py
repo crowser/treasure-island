@@ -1,24 +1,30 @@
-import os
-
+"""初始化celery"""
 from celery import Celery
-from werkzeug.utils import import_string
-from app.utils.data_structure import Config
+from celery.schedules import crontab
 
-# 初始化配置
-config = Config(import_string('app.conf.base'))
-# load environment configuration
-if 'FLASK_CONF' in os.environ:
-    config = import_string(os.environ.get('FLASK_CONF'))
+# pylint: disable=W0611
 
-celery = Celery(
-    __name__,
-    backend=config['CELERY_RESULT_BACKEND'],
-    broker=config['CELERY_BROKER_URL']
-)
+celery = Celery()
+
+# 定义定时任务
+beat_schedule = {
+    'synchronization': {
+        'task': "app.tasks.reptile.synchronization",
+        'schedule': crontab(minute='*/30'),
+    },
+    "get_results": {
+        "task": "app.tasks.reptile.get_results",
+        "schedule": crontab(minute='*/5'),
+    }
+}
 
 
 def init_celery(app):
+    """初始化celery"""
     celery.conf.update(app.config)
+    register_tasks()
+    # 注册定时任务
+    celery.conf.beat_schedule.update(beat_schedule)
 
     class ContextTask(celery.Task):
         def __call__(self, *args, **kwargs):
@@ -29,5 +35,6 @@ def init_celery(app):
     return celery
 
 
-# 注册任务
-from . import reptile
+def register_tasks():
+    """注册任务"""
+    from . import reptile  # noqa: F401

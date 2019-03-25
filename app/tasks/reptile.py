@@ -1,10 +1,13 @@
 """处理任务"""
-
 import requests
-from app.models.auction import Auction, Status
-from app.utils.switch_time import get_timestamp
-from . import celery
 
+from . import celery
+from app.models.auction import Auction
+from app.models.auction import Status
+from app.utils.switch_time import get_timestamp
+
+
+# pylint: disable=E1101
 
 @celery.task
 def synchronization():
@@ -57,7 +60,8 @@ def get_results():
         except requests.exceptions.RequestException:
             print('HTTP Request failed')
 
-    qs = Auction.objects(endTime__lt=get_timestamp(), status__ne=Status.end.value).all()
+    qs = Auction.objects(endTime__lt=get_timestamp(),
+                         status__ne=Status.end.value).all()
     for auction in qs:
         auction = send_request(auction.auction_id)
         Auction.upsert(auction)

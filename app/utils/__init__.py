@@ -1,5 +1,6 @@
 """工具初始化"""
-from app.utils.exception import handle_invalid_usage, InvalidUsage
+from app.utils.exception import handle_invalid_usage
+from app.utils.exception import InvalidUsage
 
 
 def init_utils(app):
