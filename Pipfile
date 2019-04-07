@@ -19,6 +19,7 @@ flask-mongoengine = "*"
 requests = "*"
 celery = "*"
 redis = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.6"

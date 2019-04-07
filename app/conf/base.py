@@ -1,11 +1,14 @@
 """配置"""
+import os
 
-DEBUG = True
+MONGO_USERNAME = os.environ.get('MONGO_INITDB_ROOT_USERNAME')
+MONGO_PASSWORD = os.environ.get('MONGO_INITDB_ROOT_PASSWORD')
+
 MONGODB_SETTINGS = {
-    'host': 'mongodb://root:123456@localhost:27017/treasure_island?authSource=admin',
+    'host': f'mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@mongo:27017/treasure_island?authSource=admin',
     'connect': False
 }
 
 # celery config
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'

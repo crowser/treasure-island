@@ -1,0 +1,48 @@
+version: '3'
+services:
+
+  redis:
+    image: redis
+    restart: always
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/.container/data/mongo/db:/data/db
+      - ~/.container/data/mongo/configdb:/data/configdb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+
+  treasure-island:
+    depends_on:
+      - mongo
+      - redis
+    build: .
+    image: treasure-island:latest
+    restart: always
+    ports:
+      - "4000:4000"
+    links:
+      - "mongo"
+      - "redis"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+
+  celery:
+    depends_on:
+      - mongo
+      - redis
+    image: treasure-island:latest
+    restart: always
+    links:
+      - "mongo"
+      - "redis"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+    command: celery -B -A  app.tasks worker
