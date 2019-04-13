@@ -64,4 +64,4 @@ def get_results():
                          status__ne=Status.end.value).all()
     for auction in qs:
         auction = send_request(auction.auction_id)
-        Auction.upsert(auction)
+        Auction.update(auction)

@@ -52,6 +52,16 @@ class Auction(db.Document):
             upsert=True
         )
 
+    @classmethod
+    def update(cls, data):
+        return cls.objects(
+            auction_id=data.get('id'),
+        ).update_one(
+            set__status=data.get('status'),
+            set__currentPrice=data.get('currentPrice'),
+            set__bidder=data.get('bidder')
+        )
+
     def to_dict(self):
         return {
             'auction_id': self.auction_id,
