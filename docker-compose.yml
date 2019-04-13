@@ -37,6 +37,7 @@ services:
     depends_on:
       - mongo
       - redis
+      - treasure-island
     image: treasure-island:latest
     restart: always
     links:
