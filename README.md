@@ -13,7 +13,7 @@
 
     ```bash
     MONGO_INITDB_ROOT_USERNAME=root
-    MONGO_INITDB_ROOT_PASSWORD=`配置密码密码`
+    MONGO_INITDB_ROOT_PASSWORD=`配置密码`
     ```
 3. 启动应用
 
