@@ -27,7 +27,6 @@ def yield_auction():
                     "category1": "",
                     "status": "1",
                     "orderDirection": "1",
-                    "productTypes": "1",
                     "orderType": "1",
                 },
             )
