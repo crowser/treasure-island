@@ -32,6 +32,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+      - SENTRY_DSN=$SENTRY_DSN
 
   celery:
     depends_on:
@@ -46,4 +47,5 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
       - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+      - SENTRY_DSN=$SENTRY_DSN
     command: celery -B -A  app.tasks worker

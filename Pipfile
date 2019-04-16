@@ -20,7 +20,7 @@ requests = "*"
 celery = "*"
 redis = "*"
 gunicorn = "*"
-loguru = "*"
+sentry-sdk = {extras = ["flask"],version = "==0.7.10"}
 
 [requires]
 python_version = "3.6"

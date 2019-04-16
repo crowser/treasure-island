@@ -3,6 +3,7 @@ import os
 
 MONGO_USERNAME = os.environ.get('MONGO_INITDB_ROOT_USERNAME')
 MONGO_PASSWORD = os.environ.get('MONGO_INITDB_ROOT_PASSWORD')
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
 
 MONGODB_SETTINGS = {
     'host': f'mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@mongo:27017/treasure_island?authSource=admin',
