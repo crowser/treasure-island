@@ -20,6 +20,7 @@ requests = "*"
 celery = "*"
 redis = "*"
 gunicorn = "*"
+loguru = "*"
 
 [requires]
 python_version = "3.6"

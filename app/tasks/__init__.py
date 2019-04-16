@@ -1,8 +1,9 @@
 """初始化celery"""
 from celery import Celery
 from celery.schedules import crontab
+from loguru import logger
 
-# pylint: disable=W0611
+# pylint: disable=W0611, R0401
 
 celery = Celery()
 
@@ -28,8 +29,11 @@ def init_celery(app):
 
     class ContextTask(celery.Task):
         def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return self.run(*args, **kwargs)
+            try:
+                with app.app_context():
+                    return self.run(*args, **kwargs)
+            except Exception as e:
+                logger.debug(e)
 
     celery.Task = ContextTask
     return celery

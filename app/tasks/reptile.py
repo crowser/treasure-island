@@ -31,7 +31,7 @@ def yield_auction():
                 },
             )
             data = response.json().get('data')
-            return data.get(get_key) if get_key else data
+            return (data.get(get_key) if get_key else data) or ''
         except requests.exceptions.RequestException:
             print('HTTP Request failed')
 
