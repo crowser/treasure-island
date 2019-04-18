@@ -9,7 +9,7 @@ from app.utils.switch_time import get_timestamp
 
 # pylint: disable=E1101
 
-@celery.task
+@celery.task(time_limit=60 * 10)
 def synchronization():
     """同步jd待拍仓库"""
     for auction in yield_auction():
@@ -43,7 +43,7 @@ def yield_auction():
             yield auction
 
 
-@celery.task
+@celery.task(time_limit=60 * 10)
 def get_results():
     """获取拍卖结果"""
 
