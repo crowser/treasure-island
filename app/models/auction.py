@@ -54,13 +54,16 @@ class Auction(db.Document):
 
     @classmethod
     def update(cls, data):
-        return cls.objects(
-            auction_id=data.get('id'),
-        ).update_one(
-            set__status=data.get('status'),
-            set__currentPrice=data.get('currentPrice'),
-            set__bidder=data.get('bidder')
-        )
+        try:
+            return cls.objects(
+                auction_id=data.get('id'),
+            ).update_one(
+                set__status=data.get('status'),
+                set__currentPrice=data.get('currentPrice'),
+                set__bidder=data.get('bidder')
+            )
+        except AttributeError:
+            pass
 
     def to_dict(self):
         return {
