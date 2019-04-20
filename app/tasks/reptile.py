@@ -39,7 +39,7 @@ def yield_auction():
     page_size = 100
     total_pages = total_number // page_size + 1
     for page_no in range(total_pages, 0, -1):
-        for auction in send_request(page_no, page_size, 'auctionInfos'):
+        for auction in send_request(page_no, page_size, 'auctionInfos') or []:
             yield auction
 
 
