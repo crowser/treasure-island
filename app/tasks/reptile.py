@@ -9,7 +9,7 @@ from app.utils.switch_time import get_timestamp
 
 # pylint: disable=E1101
 
-@celery.task(time_limit=60 * 10)
+@celery.task
 def synchronization():
     """同步jd待拍仓库"""
     for auction in yield_auction():
@@ -30,6 +30,9 @@ def yield_auction():
                     "orderType": "1",
                 },
             )
+            if response.status_code >= 300:
+                raise requests.exceptions.RequestException
+
             data = response.json().get('data')
             return data.get(get_key) if get_key else data
         except requests.exceptions.RequestException:
@@ -43,7 +46,7 @@ def yield_auction():
             yield auction
 
 
-@celery.task(time_limit=60 * 10)
+@celery.task
 def get_results():
     """获取拍卖结果"""
 
@@ -55,6 +58,8 @@ def get_results():
                     "auctionId": str(auction_id),
                 },
             )
+            if response.status_code >= 300:
+                raise requests.exceptions.RequestException
             return response.json().get('data').get('auctionInfo')
         except requests.exceptions.RequestException:
             print('HTTP Request failed')
